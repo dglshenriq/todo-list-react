@@ -15,7 +15,10 @@
   text-align: right;
 }
 .btn-close {
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+.body {
+  padding: 10px 0;
 }

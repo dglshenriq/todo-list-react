@@ -7,6 +7,7 @@ import { Header } from "./components/Header";
 import { Heading } from "./components/Heading";
 import { IconPlus, IconSchool } from "./components/icons";
 import { SubHeading } from "./components/SubHeading";
+import { TextInput } from "./components/TextInput";
 import { ToDoItem } from "./components/ToDoItem";
 import { ToDoList } from "./components/ToDoList";
 import { useState } from "react";
@@ -83,7 +84,9 @@ function App() {
           </ToDoList>
           <Footer>
             <Dialog isOpen={showDialog} onClose={toggleDialog}>
-              <p>This modal dialog has a groovy backdrop!</p>
+              <form>
+                <TextInput placeholder="Digite o item que deseja adicionar" />
+              </form>
             </Dialog>
             <FabButton onClick={toggleDialog}>
               <IconPlus />

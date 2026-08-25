@@ -30,7 +30,9 @@ export function Dialog({ isOpen, onClose, children }) {
             <IconClose />
           </button>
         </div>
-        {children}
+        <div className="body">
+            {children}
+        </div>
       </dialog>
     </>
   );

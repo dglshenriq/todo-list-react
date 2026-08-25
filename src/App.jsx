@@ -1,4 +1,3 @@
-import { Button } from "./components/Button";
 import { ChecklistsWrapper } from "./components/ChecklistsWrapper";
 import { Container } from "./components/Container";
 import { Dialog } from "./components/Dialog";
@@ -8,7 +7,7 @@ import { Header } from "./components/Header";
 import { Heading } from "./components/Heading";
 import { IconPlus, IconSchool } from "./components/icons";
 import { SubHeading } from "./components/SubHeading";
-import { TextInput } from "./components/TextInput";
+
 import { TodoForm } from "./components/TodoForm";
 import { ToDoItem } from "./components/ToDoItem";
 import { ToDoList } from "./components/ToDoList";
@@ -60,12 +59,12 @@ function App() {
 
   const toggleDialog = () => {
     setShowDialog(!showDialog);
-    console.log("alternar modal");
   };
 
-  const addTodo = () =>{
-    console.log('Add um novo todo')
-  }
+  const addTodo = () => {
+    console.log("Add um novo todo");
+    toggleDialog();
+  };
 
   return (
     <main>
@@ -90,7 +89,7 @@ function App() {
           </ToDoList>
           <Footer>
             <Dialog isOpen={showDialog} onClose={toggleDialog}>
-              <TodoForm onSubmit={addTodo}/>
+              <TodoForm onSubmit={addTodo} />
             </Dialog>
             <FabButton onClick={toggleDialog}>
               <IconPlus />

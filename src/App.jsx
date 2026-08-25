@@ -1,3 +1,4 @@
+import { Button } from "./components/Button";
 import { ChecklistsWrapper } from "./components/ChecklistsWrapper";
 import { Container } from "./components/Container";
 import { Dialog } from "./components/Dialog";
@@ -8,6 +9,7 @@ import { Heading } from "./components/Heading";
 import { IconPlus, IconSchool } from "./components/icons";
 import { SubHeading } from "./components/SubHeading";
 import { TextInput } from "./components/TextInput";
+import { TodoForm } from "./components/TodoForm";
 import { ToDoItem } from "./components/ToDoItem";
 import { ToDoList } from "./components/ToDoList";
 import { useState } from "react";
@@ -61,6 +63,10 @@ function App() {
     console.log("alternar modal");
   };
 
+  const addTodo = () =>{
+    console.log('Add um novo todo')
+  }
+
   return (
     <main>
       <Container>
@@ -84,9 +90,7 @@ function App() {
           </ToDoList>
           <Footer>
             <Dialog isOpen={showDialog} onClose={toggleDialog}>
-              <form>
-                <TextInput placeholder="Digite o item que deseja adicionar" />
-              </form>
+              <TodoForm onSubmit={addTodo}/>
             </Dialog>
             <FabButton onClick={toggleDialog}>
               <IconPlus />

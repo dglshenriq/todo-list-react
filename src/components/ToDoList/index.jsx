@@ -1,6 +1,6 @@
 import './todo-list.style.css'
 
-export function ToDoList ({ children }) {
+export function TodoList ({ children }) {
     return (
         <ul className='todo-list'>
             {children}

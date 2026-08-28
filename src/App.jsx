@@ -86,8 +86,18 @@ function App() {
       };
       return [...prevState, todo];
     });
-    console.log("Add um novo todo");
     toggleDialog();
+  };
+
+  const toggleTodoCompleted = (todo) => {
+    setTodos((prevState) => {
+      return prevState.map((t) => {
+        if (t.id == todo.id) {
+          return { ...t, completed: !t.completed };
+        }
+        return t;
+      });
+    });
   };
 
   return (
@@ -104,7 +114,7 @@ function App() {
             {todos
               .filter((t) => !t.completed)
               .map(function (t) {
-                return <ToDoItem key={t.id} item={t} />;
+                return <ToDoItem key={t.id} item={t} onToggleCompleted={toggleTodoCompleted}/>;
               })}
           </ToDoList>
           <SubHeading>Concluído</SubHeading>
@@ -112,7 +122,7 @@ function App() {
             {todos
               .filter((t) => t.completed)
               .map(function (t) {
-                return <ToDoItem key={t.id} item={t} />;
+                return <ToDoItem key={t.id} item={t} onToggleCompleted={toggleTodoCompleted}/>;
               })}
           </ToDoList>
           <Footer>

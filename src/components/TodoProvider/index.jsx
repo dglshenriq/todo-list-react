@@ -2,9 +2,25 @@ import { useEffect, useState } from "react";
 import TodoContext from "./TodoContext";
 
 const TODOS = "todos";
+
 export function TodoProvider({ children }) {
   const savedTodo = localStorage.getItem(TODOS);
-  const [todos, setTodos] = useState(savedTodo ? JSON.parse(savedTodo) : [])
+
+  const [todos, setTodos] = useState(savedTodo ? JSON.parse(savedTodo) : []);
+  const [showDialog, setShowDialog] = useState(false);
+  const [selectedTodo, setSelectedTodo] = useState();
+
+  const openFormTodoDialog = (todo) => {
+    if (todo) {
+      setSelectedTodo(todo);
+    }
+    setShowDialog(true);
+  };
+
+  const closeFormTodoDialog = () => {
+    setShowDialog(false);
+    setSelectedTodo(null);
+  };
 
   useEffect(() => {
     localStorage.setItem(TODOS, JSON.stringify(todos));
@@ -34,11 +50,26 @@ export function TodoProvider({ children }) {
     });
   };
 
+  const editTodo = (formData) => {
+  setTodos(prevState => {
+    return prevState.map(t => {
+      if (t.id === selectedTodo.id) {
+        return {
+          ...t,
+          description: formData.get('description')
+        }
+      }
+      return t
+    })
+  })
+}
+
   const deleteTodo = (todo) => {
     setTodos((prevState) => {
       return prevState.filter((t) => t.id !== todo.id);
     });
   };
+
   return (
     <TodoContext
       value={{
@@ -46,6 +77,10 @@ export function TodoProvider({ children }) {
         addTodo,
         toggleTodoCompleted,
         deleteTodo,
+        showDialog,
+        openFormTodoDialog,
+        closeFormTodoDialog,
+        selectedTodo, editTodo
       }}
     >
       {children}

@@ -8,20 +8,27 @@ import { Heading } from "./components/Heading";
 import { IconPlus, IconSchool } from "./components/icons";
 import { TodoForm } from "./components/TodoForm";
 import { TodoGroup } from "./components/TodoGroup";
-import { useState, use } from "react";
+import { use } from "react";
 import TodoContext from "./components/TodoProvider/TodoContext";
+import { EmptyState } from "./components/EmptyState";
 
 function App() {
-  const [showDialog, setShowDialog] = useState(false);
-  const { todos, addTodo } = use(TodoContext);
-
-  const toggleDialog = () => {
-    setShowDialog(!showDialog);
-  };
+  const {
+    todos,
+    addTodo,
+    showDialog,
+    openFormTodoDialog,
+    closeFormTodoDialog,
+    selectedTodo, editTodo
+  } = use(TodoContext);
 
   const handleFormSubmit = (formData) => {
-    addTodo(formData);
-    toggleDialog();
+    if (selectedTodo) {
+      editTodo(formData);
+    } else {
+      addTodo(formData);
+    }
+    closeFormTodoDialog();
   };
 
   return (
@@ -37,16 +44,20 @@ function App() {
             heading="Para estudar"
             items={todos.filter((t) => !t.completed)}
           />
+          {todos.length == 0 && <EmptyState />}
           <TodoGroup
             heading="Concluído"
             items={todos.filter((t) => t.completed)}
           />
 
           <Footer>
-            <Dialog isOpen={showDialog} onClose={toggleDialog}>
-              <TodoForm onSubmit={handleFormSubmit} />
+            <Dialog isOpen={showDialog} onClose={closeFormTodoDialog}>
+              <TodoForm
+                onSubmit={handleFormSubmit}
+                defaultValue={selectedTodo?.description}
+              />
             </Dialog>
-            <FabButton onClick={toggleDialog}>
+            <FabButton onClick={() => openFormTodoDialog()}>
               <IconPlus />
             </FabButton>
           </Footer>

@@ -13,6 +13,14 @@ export function Dialog({ isOpen, onClose, children }) {
     }
   }, [isOpen]);
 
+  useEffect(() => {
+    const dialog = dialogRef.current;
+    dialog?.addEventListener("close", onClose);
+    return () => {
+      dialog?.removeEventListener("close", onClose);
+    };
+  }, [onClose]);
+
   const openDialog = () => {
     dialogRef.current.showModal();
   };
@@ -29,9 +37,7 @@ export function Dialog({ isOpen, onClose, children }) {
             <IconClose />
           </button>
         </div>
-        <div className="body">
-            {children}
-        </div>
+        <div className="body">{children}</div>
       </dialog>
     </>
   );
